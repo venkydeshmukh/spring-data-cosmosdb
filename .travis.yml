@@ -1,5 +1,16 @@
+#os:
+#  - windows
 language: java
 jdk:
   - oraclejdk8
 
-script: "./mvnw clean install"
+before_script:
+  - chmod +x install.sh && ./install.sh
+
+script:
+  - cat ./src/test/resources/application.properties
+  - mvn -P integration-test-azure clean verify
+  - mvn -P integration-test-azure clean cobertura:cobertura-integration-test
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

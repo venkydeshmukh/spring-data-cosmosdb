@@ -15,6 +15,9 @@
             <arg value="${azure.test.dbname}"/>
             <redirector outputproperty="documentdb.key"/>
         </exec>
+        <exec osfamily="unix" executable="cat">
+            <arg value="./src/test/resources/application.properties"/>
+        </exec>
         <propertyfile file="./src/test/resources/application.properties">
             <entry key="documentdb.key" value="${documentdb.key}"/>
             <entry key="documentdb.uri" value="https://${azure.test.dbname}.documents.azure.com:443"/>
